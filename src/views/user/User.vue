@@ -29,14 +29,14 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="password"
-                    label="密码"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="department"
+                    prop="departmentID"
                     label="部门"
                     width="150">
+                <template slot-scope="scope">
+                    <el-tag size="small" type="success" v-if="scope.row.departmentID===1">声学部</el-tag>
+                    <el-tag size="small" type="success" v-if="scope.row.departmentID===2">图形图像部</el-tag>
+                    <el-tag size="small" type="success" v-if="scope.row.departmentID===3">显控部</el-tag>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="post"
@@ -76,20 +76,17 @@
                 <el-form-item label="账户" prop="username">
                     <el-input v-model="addForm.username"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input v-model="addForm.password"></el-input>
-                </el-form-item>
-                <el-form-item label="部门" prop="department">
-                    <el-input v-model="addForm.department"></el-input>
+                <el-form-item label="部门" prop="departmentID">
+                    <el-input v-model="addForm.departmentID"></el-input>
                 </el-form-item>
                 <el-form-item label="职务" prop="post">
                     <el-input v-model="addForm.post"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-    <el-button @click="addDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="addUser">确 定</el-button>
-  </span>
+                <el-button @click="addDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addUser">确 定</el-button>
+             </span>
         </el-dialog>
 
         <!--修改用户-->
@@ -113,8 +110,8 @@
                 <el-form-item label="密码" prop="password">
                     <el-input v-model="editForm.password"></el-input>
                 </el-form-item>
-                <el-form-item label="部门" prop="department">
-                    <el-input v-model="editForm.department"></el-input>
+                <el-form-item label="部门" prop="departmentID">
+                    <el-input v-model="editForm.departmentID"></el-input>
                 </el-form-item>
                 <el-form-item label="职务" prop="post">
                     <el-input v-model="editForm.post"></el-input>
@@ -171,7 +168,7 @@
                     empName:"",
                     username:"",
                     password:"",
-                    department:"",
+                    departmentID:"",
                     post:""
 
                 },
@@ -190,8 +187,7 @@
 
             //分页获取用户列表
             getPageUser(){
-                axios.get("getPageUser",{
-                    params: this.pageInfo
+                axios.post("getPageUser",{
                 }).then(response=>(this.userList=response.data.list
                     ,this.total=response.data.total))
 
@@ -208,8 +204,9 @@
             //展示编辑用户对话框
             showEditDialog(userID){
                 console.log(userID)
-                get('getUserByID?userID=' + userID)
-                    .then(response=>(this.editForm=response.data))
+                axios.post('getUserByID',{
+                    userID: userID
+                }).then(response=>(this.editForm=response.data))
                 this.editDialogVisible = true
             },
 
@@ -228,7 +225,8 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    get("deleteUser?userID=" + userID).
+                    axios.post("deleteUser",{
+                        userID: userID}).
                     then(response=>(this.remove=response.data))
                     this.$message({
                         type: 'success',

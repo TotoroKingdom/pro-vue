@@ -145,6 +145,45 @@
                                 "type": 0,
                                 "children":[]
                             },
+                            {
+                                "id": 24,
+                                "parentId": 2,
+                                "menuName": "声学部周报",
+                                "url": "/acousticsWeekly",
+                                "icon": "el-icon-user-solid",
+                                "orderNum": 3,
+                                "open":0,
+                                "disabled": false,
+                                "perms": null,
+                                "type": 0,
+                                "children":[]
+                            },
+                            {
+                                "id": 25,
+                                "parentId": 2,
+                                "menuName": "显控部周报",
+                                "url": "/displayControllerWeekly",
+                                "icon": "el-icon-user-solid",
+                                "orderNum": 3,
+                                "open":0,
+                                "disabled": false,
+                                "perms": null,
+                                "type": 0,
+                                "children":[]
+                            },
+                            {
+                                "id": 26,
+                                "parentId": 2,
+                                "menuName": "图形图像部周报",
+                                "url": "/imageWeekly",
+                                "icon": "el-icon-user-solid",
+                                "orderNum": 3,
+                                "open":0,
+                                "disabled": false,
+                                "perms": null,
+                                "type": 0,
+                                "children":[]
+                            },
                         ]
                     },
                     {

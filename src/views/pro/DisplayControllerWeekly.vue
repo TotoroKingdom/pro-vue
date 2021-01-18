@@ -92,7 +92,7 @@
     import axios from "axios"
 
     export default {
-        name: "Weekly",
+        name: "DisplayControllerWeekly",
 
         data(){
             return{
@@ -121,7 +121,7 @@
         methods: {
             //分页获取周报列表
             getPageWeekly(){
-                axios.post("getPageWeekly",{
+                axios.post("getDisplayControlWeekly",{
                     params: this.pageInfo
                 }).then(response=>(this.weeklyList=response.data.list
                     ,this.total=response.data.total))

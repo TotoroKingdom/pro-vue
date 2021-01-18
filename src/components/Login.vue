@@ -8,7 +8,7 @@
                 <img src="../assets/img/avatar.jpg">
             </div>
             <!--表单-->
-            <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="0px" class="login_form">
+            <el-form :model="loginForm" :rules="loginRules" ref="loginFormRef" label-width="0px" class="login_form">
 
                 <el-form-item label="" prop="username">
                     <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
@@ -19,7 +19,7 @@
                 </el-form-item>
 
                 <el-form-item class="login_btn">
-                    <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+                    <el-button type="primary" @click="submitForm">登录</el-button>
                     <el-button @click="resetForm('loginForm')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -28,6 +28,9 @@
 </template>
 
 <script>
+
+    import axios from 'axios'
+
     export default {
         name: "Login",
         data() {
@@ -49,18 +52,33 @@
             };
         },
         methods: {
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        this.$router.push("/main")
-                    } else {
-                        console.log('error submit!!');
+            submitForm() {
+                let _this=this
+
+                this.$refs.loginFormRef.validate(valid=>{
+                    if(valid) {
+                        axios.post('/login',{
+                            username: this.loginForm.username,
+                            password: this.loginForm.password
+                        }).then(response =>{
+                           if(response.status === 200){
+                               alert('登陆成功');
+                               _this.$store.commit('login', _this.loginForm)
+                               let path = this.$route.query.redirect
+                               this.$router.replace({path: path === '/' || path === undefined ? '/main' : path})
+
+                           }
+                        }).catch(failResponse=>{
+
+                        })
+                    } else{
+                        this.$message.error('请输入所有字段！');
                         return false;
                     }
-                });
+                })
             },
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
+            resetForm() {
+                this.$refs.loginFormRef.resetFields();
             }
         }
 

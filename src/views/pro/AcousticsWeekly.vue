@@ -92,7 +92,7 @@
     import axios from "axios"
 
     export default {
-        name: "Weekly",
+        name: "AcousticsWeekly",
 
         data(){
             return{
@@ -121,7 +121,7 @@
         methods: {
             //分页获取周报列表
             getPageWeekly(){
-                axios.post("getPageWeekly",{
+                axios.post("getAcousticsWeekly",{
                     params: this.pageInfo
                 }).then(response=>(this.weeklyList=response.data.list
                     ,this.total=response.data.total))
