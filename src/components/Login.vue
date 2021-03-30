@@ -37,7 +37,7 @@
             return {
                 loginForm: {
                     username: '',
-                    password: ''
+                    password: '',
                 },
                 loginRules: {
                     username: [
@@ -62,12 +62,12 @@
                             password: this.loginForm.password
                         }).then(response =>{
                            if(response.status === 200){
-                               alert('登陆成功');
                                _this.$store.commit('login', _this.loginForm)
+                               window.sessionStorage.setItem("empName", response.data.data.empName);
+                               window.sessionStorage.setItem("userID", response.data.data.userID);
                                let path = this.$route.query.redirect
                                this.$router.replace({path: path === '/' || path === undefined ? '/main' : path})
-
-                           }
+                           }else{alert('登录失败')}
                         }).catch(failResponse=>{
 
                         })

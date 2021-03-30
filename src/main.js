@@ -7,7 +7,11 @@ import store from './store'
 import './assets/css/global.css'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8088/'
+//axios.defaults.baseURL = 'http://192.168.56.1:8080/'
+
+axios.defaults.baseURL = 'http://localhost:8080'
+
+//axios.defaults.baseURL = 'http://47.115.190.50:8080'
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false
@@ -30,6 +34,8 @@ router.beforeEach((to, from, next) => {
     }
 )
 
+// 让ajax携带cookie
+axios.defaults.withCredentials = true;
 
 new Vue({
   router,

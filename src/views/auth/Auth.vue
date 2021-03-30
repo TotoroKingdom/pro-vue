@@ -1,7 +1,20 @@
 <template>
     <div class="Auth">
+        <h3>权限列表</h3>
+        <!--面包屑导航区域-->
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>权限管理</el-breadcrumb-item>
+            <el-breadcrumb-item>权限列表</el-breadcrumb-item>
+        </el-breadcrumb>
+        <br>
 
-        <el-table
+        <!--卡片视图-->
+        <el-card>
+            123
+        </el-card>
+
+        <!--<el-table
                 :data="userList"
                 border
                 style="width: 100%;height: 430px">
@@ -40,10 +53,10 @@
                 <el-button type="warning" icon="el-icon-edit" size="mini">修改</el-button>
                 <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
             </el-table-column>
-        </el-table>
+        </el-table>-->
 
         <!--分页区域-->
-        <el-pagination
+        <!--<el-pagination
                 background
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -52,7 +65,7 @@
                 :page-size="pageInfo.pageSize"
                 layout="total,sizes,prev, pager, next,jumper"
                 :total="total">
-        </el-pagination>
+        </el-pagination>-->
 
     </div>
 </template>
@@ -67,6 +80,8 @@
         name: "Auth",
         data(){
           return{
+              //权限列表
+              permissionList:[],
               userList:[],
               pageInfo:{
                   pageNum: 1,
@@ -76,12 +91,14 @@
           }
         },
         methods:{
-            /*
-            getUserList(){
-                get("findAllUser",{}).then(response=>(this.userList=response.data))
 
+            getPermissionList(){
+                axios.post("getPermissionList"
+                ).then(response=>(this.permissionList=response.data))
             },
-             */
+
+
+
 
             //分页获取用户列表
             getPageUser(){
@@ -107,6 +124,7 @@
         created(){
             //this.getUserList();
             this.getPageUser();
+            this.getPermissionList();
         }
     }
 </script>

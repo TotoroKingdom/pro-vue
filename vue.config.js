@@ -4,24 +4,26 @@ proxyObj['/']={
     //websocket
     ws:false,
 
-    target:'http://localhost:8088',
+    //target:'http://192.168.56.1:8080',
+    target:'http://localhost:8080',
+    //target:'http://47.115.190.50:8080',
 
     changeOrigin: true,
 
     pathRewrite:{
         '^/':'/'
-    }
-
+    },
 }
 
-module.export={
+module.exports = {
+
     devServer:{
-        host:'192.168.2.123',
-        port:8080,
+        host:'localhost',
+        //host:'47.115.190.50',
+        port:8088,
         proxy:proxyObj
     }
 }
-
 
 
 

@@ -5,7 +5,10 @@
                 <img src="../assets/img/logo.png">
                 <span>项目管理系统</span>
             </div>
-
+            <div class="top_box">
+                <span>欢迎</span>
+                <span>{{empName}}</span>
+            </div>
             <div class="right_box">
                 <el-button type="info" @click="logout()">退出登录</el-button>
             </div>
@@ -40,6 +43,7 @@
         name: "Main",
         data() {
             return  {
+                empName: window.sessionStorage.getItem('empName'),
                 MenuList: [
                     {
                         "id": 1,
@@ -235,7 +239,7 @@
         methods:{
             logout(){
                 window.sessionStorage.clear()
-                this.$route.push("/login")
+                this.$router.push('/login')
             }
         },
     }
@@ -272,7 +276,12 @@
 
         /*标题*/
         span{
-            margin-left: 50px;
+            margin-left: 10px;
+        }
+
+        /*欢迎样式*/
+        .top_box{
+            color: #d698ff;
         }
 
         /*退出登录按钮*/

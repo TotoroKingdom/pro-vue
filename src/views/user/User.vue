@@ -187,12 +187,11 @@
 
             //分页获取用户列表
             getPageUser(){
-                axios.post("getPageUser",{
-                }).then(response=>(this.userList=response.data.list
+                axios.post("getPageUser",this.pageInfo
+                ).then(response=>(this.userList=response.data.list
                     ,this.total=response.data.total))
 
             },
-
 
             //添加用户
             addUser(){

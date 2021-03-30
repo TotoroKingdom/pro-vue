@@ -50,9 +50,9 @@
                 <el-row :gutter="15">
                     <el-form ref="elForm" :model="addForm" :rules="rules" size="medium" label-width="100px">
                         <el-col :span="24">
-                            <el-form-item label="用户ID" prop="userID">
+                            <el-form-item label="用户ID" prop="userID" >
                                 <el-input v-model="addForm.userID" placeholder="请输入你的用户ID" show-word-limit clearable
-                                          prefix-icon='el-icon-user' :style="{width: '100%'}"></el-input>
+                                          prefix-icon='el-icon-user' :style="{width: '100%'}" readonly></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="24">
@@ -83,27 +83,37 @@
 
             <!--修改周报-->
             <el-dialog
-                    title="修改周报"
                     :visible.sync="editDialogVisible"
-                    width="50%">
-                <!--内容主体区域-->
-                <el-form :model="editForm"
-                         ref="editFormRef"
-                         label-width="70px">
-                    <el-form-item label="周报内容" prop="weeklyContent">
-                        <el-input v-model="editForm.weeklyContent"></el-input>
-                    </el-form-item>
-                    <el-form-item label="开始时间" prop="startTime">
-                        <el-input v-model="editForm.startTime"></el-input>
-                    </el-form-item>
-                    <el-form-item label="结束时间" prop="endTime">
-                        <el-input v-model="editForm.endTime"></el-input>
-                    </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer">
-                     <el-button @click="editDialogVisible = false">取 消</el-button>
-                     <el-button type="primary" @click="updateWeekly">确 定</el-button>
-                 </span>
+                    title="修改周报">
+                <el-row :gutter="15">
+                    <el-form ref="editFormRef"
+                             :model="editForm"
+                             :rules="editForm" size="medium" label-width="100px">
+
+                        <el-col :span="24">
+                            <el-form-item label="周报内容" prop="weeklyContent">
+                                <el-input v-model="editForm.weeklyContent" type="textarea" placeholder="请输入周报内容" :maxlength="5000"
+                                          show-word-limit :autosize="{minRows: 1, maxRows: 10}"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-form-item label="开始时间" prop="startTime">
+                                <el-date-picker v-model="editForm.startTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                                                :style="{width: '100%'}" placeholder="请选择周报开始时间" clearable></el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-form-item label="结束时间" prop="endTime">
+                                <el-date-picker v-model="editForm.endTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                                                :style="{width: '100%'}" placeholder="请选择周报结束时间" clearable></el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </el-form>
+                </el-row>
+                <div slot="footer">
+                    <el-button @click="editDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="updateWeekly">确 定</el-button>
+                </div>
             </el-dialog>
 
             <!--分页区域-->
@@ -136,7 +146,7 @@
 
                 //分页信息
                 pageInfo:{
-                    userID: 1,//当前用户
+                    userID: window.sessionStorage.getItem('userID'),//当前用户
                     pageNum: 1,//当前页
                     pageSize: 5//每页展示的用户数
                 },
@@ -147,7 +157,7 @@
                 //添加周报数据
                 addForm:{
                     weeklyID: "",
-                    userID: "",
+                    userID: window.sessionStorage.getItem('userID'),
                     weeklyContent: "",
                     startTime: "",
                     endTime: ""
@@ -199,6 +209,7 @@
                     ,this.total=response.data.total))
             },
 
+            //添加周报
             addWeekly(){
               axios.post("addWeekly",this.addForm).then(response=>(this.addForm=response.data))
 
@@ -212,7 +223,7 @@
                 console.log(weeklyID)
                 axios.post("getWeeklyByWeeklyID",{
                     weeklyID: weeklyID
-                }).then(response=>(this.editForm=response.data))
+                }).then(response=>(this.editForm=response.data.data))
                 this.editDialogVisible = true
             },
 

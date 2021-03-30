@@ -121,9 +121,8 @@
         methods: {
             //分页获取周报列表
             getPageWeekly(){
-                axios.post("getDisplayControlWeekly",{
-                    params: this.pageInfo
-                }).then(response=>(this.weeklyList=response.data.list
+                axios.post("getDisplayControlWeekly",this.pageInfo
+                ).then(response=>(this.weeklyList=response.data.list
                     ,this.total=response.data.total))
             },
 
